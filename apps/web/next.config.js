@@ -1,4 +1,5 @@
 const isStaticExport = process.env.STATIC_EXPORT === 'true';
+const repoName = process.env.PAGES_REPO_NAME || '';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -8,6 +9,10 @@ const nextConfig = {
   ...(isStaticExport && {
     output: 'export',
     images: { unoptimized: true },
+    ...(repoName && {
+      basePath: `/${repoName}`,
+      assetPrefix: `/${repoName}`,
+    }),
   }),
 
   // Security headers (not supported in static export)
