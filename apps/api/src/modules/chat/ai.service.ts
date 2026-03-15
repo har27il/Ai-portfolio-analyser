@@ -75,7 +75,7 @@ export async function getAIResponse(
     });
 
     const messageContent = response.content[0];
-    const message = messageContent.type === 'text' ? messageContent.text : '';
+    const message = messageContent && 'text' in messageContent ? messageContent.text : '';
 
     // Extract suggested follow-ups based on query type
     const followUps = generateFollowUps(userQuery, portfolioContext);

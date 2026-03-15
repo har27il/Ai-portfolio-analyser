@@ -10,7 +10,7 @@ interface ParsedHolding {
   broker?: string;
 }
 
-interface ParseResult {
+export interface ParseResult {
   success: boolean;
   holdings: ParsedHolding[];
   errors: { row: number; column: string; value: string; message: string }[];
@@ -51,13 +51,14 @@ function detectBroker(headers: string[]): string {
 }
 
 function mapColumns(headers: string[], broker: string): Record<number, string> {
-  const mapping = COLUMN_MAPS[broker] || COLUMN_MAPS.generic;
+  const mapping = COLUMN_MAPS[broker] ?? COLUMN_MAPS['generic'] ?? {};
   const columnMap: Record<number, string> = {};
 
   headers.forEach((header, index) => {
     const normalized = header.toLowerCase().trim();
-    if (mapping[normalized]) {
-      columnMap[index] = mapping[normalized];
+    const mapped = mapping[normalized];
+    if (mapped) {
+      columnMap[index] = mapped;
     }
   });
 
@@ -153,6 +154,9 @@ function parseExcel(buffer: Buffer, broker?: string): ParseResult {
     return { success: false, holdings: [], errors: [{ row: 0, column: '', value: '', message: 'Excel file has no sheets' }], warnings: [] };
   }
   const sheet = workbook.Sheets[sheetName];
+  if (!sheet) {
+    return { success: false, holdings: [], errors: [{ row: 0, column: '', value: '', message: 'Could not read Excel sheet' }], warnings: [] };
+  }
   const csvContent = XLSX.utils.sheet_to_csv(sheet);
   return parseCSV(csvContent, broker);
 }

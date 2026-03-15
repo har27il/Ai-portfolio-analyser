@@ -7,7 +7,7 @@ interface HoldingData {
   exchange?: string | null;
 }
 
-interface HealthScoreResult {
+export interface HealthScoreResult {
   overall: number;
   components: {
     diversification: { score: number; max: number; factors: string[] };
