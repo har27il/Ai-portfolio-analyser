@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Portfolio Intelligence',
+  title: 'Portfolio Analyzer',
   description: 'AI-powered portfolio analysis for retail investors',
 };
 
@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="font-sans antialiased bg-gray-50 text-gray-900">
+      <body className="font-sans">
         <Providers>
           {children}
         </Providers>

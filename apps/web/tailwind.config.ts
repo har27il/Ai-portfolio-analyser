@@ -7,30 +7,39 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        surface: '#F5F5F7',
+        accent: '#4F46E5',
+        'card-dark': '#1C1C2E',
+        'card-darker': '#15152A',
         primary: {
-          50: '#E6F3FF',
-          100: '#CCE7FF',
-          200: '#99CFFF',
-          300: '#66B7FF',
-          400: '#339FFF',
-          500: '#0066CC',
-          600: '#0052A3',
-          700: '#003D7A',
-          800: '#002952',
-          900: '#001429',
-        },
-        success: {
-          500: '#10B981',
-        },
-        warning: {
-          500: '#F59E0B',
-        },
-        danger: {
-          500: '#EF4444',
+          50: '#EEF2FF',
+          100: '#E0E7FF',
+          200: '#C7D2FE',
+          300: '#A5B4FC',
+          400: '#818CF8',
+          500: '#4F46E5',
+          600: '#4338CA',
+          700: '#3730A3',
+          800: '#312E81',
+          900: '#1E1B4B',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: [
+          'Inter',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'system-ui',
+          'sans-serif',
+        ],
+      },
+      borderRadius: {
+        '2xl': '1rem',
+        '3xl': '1.5rem',
+      },
+      boxShadow: {
+        card: '0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02)',
+        'card-lg': '0 4px 12px rgba(0,0,0,0.06)',
       },
     },
   },

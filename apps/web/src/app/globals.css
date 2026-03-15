@@ -4,6 +4,64 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900;
+    @apply bg-surface text-gray-900 antialiased;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-2xl p-5 shadow-card;
+  }
+
+  .card-dark {
+    @apply bg-card-dark rounded-2xl p-5 text-white;
+  }
+
+  .pill {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium;
+  }
+
+  .pill-green {
+    @apply pill bg-emerald-500/10 text-emerald-500;
+  }
+
+  .pill-red {
+    @apply pill bg-red-500/10 text-red-500;
+  }
+
+  .pill-muted {
+    @apply pill bg-gray-100 text-gray-500;
+  }
+
+  .nav-item {
+    @apply flex flex-col items-center gap-0.5 text-[10px] font-medium transition-colors;
+  }
+
+  .nav-item-active {
+    @apply nav-item text-accent;
+  }
+
+  .nav-item-inactive {
+    @apply nav-item text-gray-400;
+  }
+
+  .section-title {
+    @apply text-sm font-semibold text-gray-500 uppercase tracking-wider;
+  }
+
+  .btn-primary {
+    @apply bg-accent text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-accent/90 transition;
+  }
+
+  .btn-outline {
+    @apply border border-gray-200 px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-gray-50 transition;
+  }
+
+  .stat-value {
+    @apply text-2xl font-bold tracking-tight;
+  }
+
+  .stat-label {
+    @apply text-xs text-gray-400 font-medium;
   }
 }
