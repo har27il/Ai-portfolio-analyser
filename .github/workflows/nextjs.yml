@@ -50,7 +50,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build with Next.js
-        run: STATIC_EXPORT=true pnpm --filter @portfolio/web build
+        run: STATIC_EXPORT=true PAGES_REPO_NAME=${{ github.event.repository.name }} pnpm --filter @portfolio/web build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
