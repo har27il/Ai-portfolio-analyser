@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import Link from 'next/link';
+import { BottomNav } from '@/components/bottom-nav';
 
 export default function UploadPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -35,94 +36,104 @@ export default function UploadPage() {
     if (!file) return;
     setUploading(true);
     try {
-      // For MVP, simulate upload with client-side parsing
       const text = await file.text();
       setResult({
         success: true,
-        message: `File "${file.name}" parsed successfully. ${text.split('\n').length - 1} rows detected.`,
+        message: `"${file.name}" parsed successfully`,
+        rows: text.split('\n').length - 1,
         fileName: file.name,
       });
-    } catch (err) {
+    } catch {
       setResult({ success: false, message: 'Failed to parse file. Please check the format.' });
     }
     setUploading(false);
   };
 
+  const brokers = [
+    { id: 'zerodha', label: 'Zerodha', icon: '📊' },
+    { id: 'groww', label: 'Groww', icon: '📈' },
+    { id: 'upstox', label: 'Upstox', icon: '📉' },
+    { id: 'generic', label: 'Generic', icon: '📄' },
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
-          <Link href="/dashboard" className="text-sm text-gray-500 hover:text-gray-900">← Dashboard</Link>
-          <h1 className="text-lg font-bold">Upload Portfolio</h1>
-        </div>
+    <div className="min-h-screen bg-surface pb-20">
+      {/* Header */}
+      <header className="px-5 pt-6 pb-4 flex items-center gap-3">
+        <Link href="/dashboard" className="p-2 -ml-2 rounded-xl hover:bg-white">
+          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </Link>
+        <h1 className="text-xl font-bold">Upload Portfolio</h1>
       </header>
 
-      <main className="max-w-2xl mx-auto px-4 py-8 space-y-6">
+      <main className="px-5 space-y-4">
         {/* Broker Selection */}
-        <div className="bg-white rounded-xl border p-6">
-          <h2 className="font-semibold mb-3">Select Broker Format</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {[
-              { id: 'zerodha', label: 'Zerodha' },
-              { id: 'groww', label: 'Groww' },
-              { id: 'upstox', label: 'Upstox' },
-              { id: 'generic', label: 'Generic CSV' },
-            ].map(b => (
+        <div>
+          <p className="section-title px-1 mb-2">Select Broker</p>
+          <div className="grid grid-cols-4 gap-2">
+            {brokers.map(b => (
               <button
                 key={b.id}
                 onClick={() => setBroker(b.id)}
-                className={`p-3 rounded-lg border text-sm font-medium transition ${
+                className={`card !p-3 flex flex-col items-center gap-1.5 transition ${
                   broker === b.id
-                    ? 'border-primary-500 bg-primary-50 text-primary-700'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? '!bg-card-dark text-white shadow-card-lg'
+                    : 'hover:shadow-card-lg'
                 }`}
               >
-                {b.label}
+                <span className="text-xl">{b.icon}</span>
+                <span className="text-[10px] font-semibold">{b.label}</span>
               </button>
             ))}
           </div>
         </div>
 
         {/* File Upload */}
-        <div className="bg-white rounded-xl border p-6">
-          <h2 className="font-semibold mb-3">Upload File</h2>
-          <div
-            className={`border-2 border-dashed rounded-xl p-8 text-center transition ${
-              dragActive ? 'border-primary-500 bg-primary-50' : 'border-gray-300'
-            }`}
-            onDragEnter={handleDrag}
-            onDragLeave={handleDrag}
-            onDragOver={handleDrag}
-            onDrop={handleDrop}
-          >
-            {file ? (
-              <div>
-                <p className="font-medium">{file.name}</p>
-                <p className="text-sm text-gray-500 mt-1">{(file.size / 1024).toFixed(1)} KB</p>
-                <button
-                  onClick={() => setFile(null)}
-                  className="text-sm text-red-500 mt-2 hover:text-red-600"
-                >
-                  Remove
-                </button>
+        <div
+          className={`card !p-0 overflow-hidden transition ${dragActive ? 'ring-2 ring-accent ring-offset-2' : ''}`}
+          onDragEnter={handleDrag}
+          onDragLeave={handleDrag}
+          onDragOver={handleDrag}
+          onDrop={handleDrop}
+        >
+          {file ? (
+            <div className="p-6 text-center">
+              <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                <svg className="w-7 h-7 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
               </div>
-            ) : (
-              <div>
-                <p className="text-gray-600 mb-2">Drag and drop your CSV or Excel file here</p>
-                <p className="text-sm text-gray-400 mb-4">or</p>
-                <label className="cursor-pointer bg-primary-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-primary-600 transition">
-                  Browse Files
-                  <input
-                    type="file"
-                    accept=".csv,.xlsx,.xls"
-                    onChange={handleFileInput}
-                    className="hidden"
-                  />
-                </label>
-                <p className="text-xs text-gray-400 mt-3">Supported: CSV, XLSX, XLS (max 10MB)</p>
+              <p className="text-sm font-semibold">{file.name}</p>
+              <p className="text-xs text-gray-400 mt-0.5">{(file.size / 1024).toFixed(1)} KB</p>
+              <button
+                onClick={() => { setFile(null); setResult(null); }}
+                className="text-xs text-red-500 font-medium mt-3 hover:text-red-600"
+              >
+                Remove file
+              </button>
+            </div>
+          ) : (
+            <div className="p-8 text-center">
+              <div className="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                <svg className="w-7 h-7 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>
               </div>
-            )}
-          </div>
+              <p className="text-sm font-semibold mb-0.5">Drop your file here</p>
+              <p className="text-xs text-gray-400 mb-4">CSV, XLSX, XLS — max 10MB</p>
+              <label className="btn-primary cursor-pointer inline-block">
+                Browse Files
+                <input
+                  type="file"
+                  accept=".csv,.xlsx,.xls"
+                  onChange={handleFileInput}
+                  className="hidden"
+                />
+              </label>
+            </div>
+          )}
         </div>
 
         {/* Upload Button */}
@@ -130,48 +141,59 @@ export default function UploadPage() {
           <button
             onClick={handleUpload}
             disabled={uploading}
-            className="w-full bg-primary-500 text-white py-3 rounded-lg font-medium hover:bg-primary-600 transition disabled:opacity-50"
+            className="w-full btn-primary py-3.5 disabled:opacity-50"
           >
-            {uploading ? 'Processing...' : 'Upload & Parse'}
+            {uploading ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                Processing...
+              </span>
+            ) : (
+              'Upload & Parse'
+            )}
           </button>
         )}
 
         {/* Result */}
         {result && (
-          <div className={`bg-white rounded-xl border p-6 ${result.success ? 'border-green-200' : 'border-red-200'}`}>
-            <p className={`font-medium ${result.success ? 'text-green-700' : 'text-red-700'}`}>
-              {result.message}
+          <div className={`card ${result.success ? 'border-l-4 border-emerald-500' : 'border-l-4 border-red-500'}`}>
+            <p className={`text-sm font-semibold ${result.success ? 'text-emerald-600' : 'text-red-600'}`}>
+              {result.success ? 'Success!' : 'Error'}
             </p>
+            <p className="text-xs text-gray-500 mt-1">{result.message}</p>
             {result.success && (
-              <Link
-                href="/dashboard"
-                className="inline-block mt-4 bg-primary-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-primary-600"
-              >
-                View Dashboard →
-              </Link>
+              <div className="flex items-center gap-2 mt-3">
+                <span className="pill-muted">{result.rows} rows</span>
+                <Link href="/dashboard" className="btn-primary !py-1.5 !px-3 !text-xs">
+                  View Dashboard →
+                </Link>
+              </div>
             )}
           </div>
         )}
 
         {/* Instructions */}
-        <div className="bg-white rounded-xl border p-6">
-          <h2 className="font-semibold mb-3">How to Export</h2>
-          <div className="space-y-3 text-sm text-gray-600">
-            <div>
-              <p className="font-medium text-gray-900">Zerodha</p>
-              <p>Go to Console → Holdings → Download CSV</p>
-            </div>
-            <div>
-              <p className="font-medium text-gray-900">Groww</p>
-              <p>Go to Stocks → Holdings → Export → Download</p>
-            </div>
-            <div>
-              <p className="font-medium text-gray-900">Generic CSV</p>
-              <p>Columns: Symbol, Name, Quantity, Avg Cost</p>
-            </div>
+        <div className="card">
+          <p className="text-sm font-semibold mb-3">How to Export</p>
+          <div className="space-y-3">
+            {[
+              { broker: 'Zerodha', steps: 'Console → Holdings → Download CSV' },
+              { broker: 'Groww', steps: 'Stocks → Holdings → Export → Download' },
+              { broker: 'Generic', steps: 'CSV with columns: Symbol, Name, Quantity, Avg Cost' },
+            ].map(item => (
+              <div key={item.broker} className="flex items-start gap-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 flex-shrink-0" />
+                <div>
+                  <p className="text-xs font-semibold">{item.broker}</p>
+                  <p className="text-[10px] text-gray-400">{item.steps}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </main>
+
+      <BottomNav active="upload" />
     </div>
   );
 }
