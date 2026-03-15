@@ -3,7 +3,9 @@ import { chatService } from './chat.service.js';
 import { validate, uuidParam, createConversationSchema, sendMessageSchema } from '../../common/validation.js';
 
 function getUserId(request: FastifyRequest): string {
-  return (request.user as any)?.sub || '';
+  const sub = (request.user as any)?.sub;
+  if (!sub) throw new Error('Unauthorized: missing user identity');
+  return sub;
 }
 
 export const chatController = {

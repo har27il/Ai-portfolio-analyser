@@ -7,7 +7,9 @@ import { portfolioService } from '../portfolio/portfolio.service.js';
 import { uuidParam, validate, benchmarkQuerySchema } from '../../common/validation.js';
 
 function getUserId(request: FastifyRequest): string {
-  return (request.user as any)?.sub || '';
+  const sub = (request.user as any)?.sub;
+  if (!sub) throw new Error('Unauthorized: missing user identity');
+  return sub;
 }
 
 async function getPortfolioOrFail(id: string, userId: string, reply: FastifyReply) {

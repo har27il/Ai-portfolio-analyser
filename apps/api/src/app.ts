@@ -87,12 +87,16 @@ await app.register(cors, {
 
 // ── JWT Authentication ─────────────────────────────────────────
 const jwtSecret = process.env.JWT_SECRET;
-if (!jwtSecret || jwtSecret === 'your-secret-key-here') {
-  app.log.warn('JWT_SECRET is not set or is using the default value. Set a strong secret in production.');
+if (!jwtSecret || jwtSecret.length < 32) {
+  if (process.env.NODE_ENV === 'production') {
+    app.log.error('FATAL: JWT_SECRET must be set to a strong value (min 32 chars) in production.');
+    process.exit(1);
+  }
+  app.log.warn('JWT_SECRET is not set — using insecure dev-only secret. DO NOT use in production.');
 }
 
 await app.register(fjwt, {
-  secret: jwtSecret || 'CHANGE-THIS-SECRET-IN-PRODUCTION',
+  secret: jwtSecret || 'dev-only-insecure-secret-not-for-production',
   sign: { expiresIn: '15m' },
 });
 
