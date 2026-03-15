@@ -8,10 +8,8 @@ export const portfolioService = {
     return db.select().from(portfolios).where(eq(portfolios.userId, userId));
   },
 
-  async getPortfolio(id: string, userId?: string) {
-    const conditions = userId
-      ? and(eq(portfolios.id, id), eq(portfolios.userId, userId))
-      : eq(portfolios.id, id);
+  async getPortfolio(id: string, userId: string) {
+    const conditions = and(eq(portfolios.id, id), eq(portfolios.userId, userId));
 
     const [portfolio] = await db.select().from(portfolios).where(conditions);
     if (!portfolio) return null;
@@ -82,20 +80,20 @@ export const portfolioService = {
     return db.insert(holdings).values(values).returning();
   },
 
-  async updateHolding(holdingId: string, data: { quantity?: number; avgCost?: number }) {
+  async updateHolding(portfolioId: string, holdingId: string, data: { quantity?: number; avgCost?: number }) {
     const updateData: Record<string, any> = { updatedAt: new Date() };
     if (data.quantity !== undefined) updateData.quantity = String(data.quantity);
     if (data.avgCost !== undefined) updateData.avgCost = String(data.avgCost);
 
     const [holding] = await db.update(holdings)
       .set(updateData)
-      .where(eq(holdings.id, holdingId))
+      .where(and(eq(holdings.id, holdingId), eq(holdings.portfolioId, portfolioId)))
       .returning();
     return holding;
   },
 
-  async removeHolding(holdingId: string) {
-    await db.delete(holdings).where(eq(holdings.id, holdingId));
+  async removeHolding(portfolioId: string, holdingId: string) {
+    await db.delete(holdings).where(and(eq(holdings.id, holdingId), eq(holdings.portfolioId, portfolioId)));
   },
 
   async refreshPrices(portfolioId: string, userId: string) {

@@ -14,7 +14,9 @@ import {
 } from '../../common/validation.js';
 
 function getUserId(request: FastifyRequest): string {
-  return (request.user as any)?.sub || '';
+  const sub = (request.user as any)?.sub;
+  if (!sub) throw new Error('Unauthorized: missing user identity');
+  return sub;
 }
 
 export const portfolioController = {
@@ -119,7 +121,7 @@ export const portfolioController = {
     // 1. Check MIME type
     if (!ALLOWED_MIME_TYPES.includes(mimetype)) {
       reply.code(400);
-      return { error: `Unsupported file type: ${mimetype}. Allowed: CSV, XLSX, XLS` };
+      return { error: 'Unsupported file type. Allowed: CSV, XLSX, XLS' };
     }
 
     // 2. Check file extension (prevent double extensions like .csv.exe)
@@ -203,7 +205,7 @@ export const portfolioController = {
       return { error: 'Portfolio not found' };
     }
 
-    const holding = await portfolioService.updateHolding(holdingId, result.data);
+    const holding = await portfolioService.updateHolding(id, holdingId, result.data);
     return holding;
   },
 
@@ -221,7 +223,7 @@ export const portfolioController = {
       return { error: 'Portfolio not found' };
     }
 
-    await portfolioService.removeHolding(holdingId);
+    await portfolioService.removeHolding(id, holdingId);
     reply.code(204);
   },
 
