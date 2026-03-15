@@ -52,14 +52,17 @@ export const overlapService = {
 
     // Calculate pairwise overlap
     for (let i = 0; i < n; i++) {
-      matrix[i][i] = 100;
+      const row = matrix[i];
+      if (row) row[i] = 100;
       for (let j = i + 1; j < n; j++) {
-        const holdingsA = SAMPLE_MF_HOLDINGS[fundSymbols[i]] || {};
-        const holdingsB = SAMPLE_MF_HOLDINGS[fundSymbols[j]] || {};
+        const symI = fundSymbols[i] ?? '';
+        const symJ = fundSymbols[j] ?? '';
+        const holdingsA = SAMPLE_MF_HOLDINGS[symI] || {};
+        const holdingsB = SAMPLE_MF_HOLDINGS[symJ] || {};
 
         const allStocks = new Set([...Object.keys(holdingsA), ...Object.keys(holdingsB)]);
         let overlapPercent = 0;
-        const commonStocks: any[] = [];
+        const commonStocks: { symbol: string; name: string; weightInFund1: number; weightInFund2: number }[] = [];
 
         allStocks.forEach(stock => {
           const wA = holdingsA[stock] || 0;
@@ -76,12 +79,16 @@ export const overlapService = {
         });
 
         overlapPercent = Math.round(overlapPercent * 10000) / 100;
-        matrix[i][j] = overlapPercent;
-        matrix[j][i] = overlapPercent;
+        const rowI = matrix[i];
+        const rowJ = matrix[j];
+        if (rowI) rowI[j] = overlapPercent;
+        if (rowJ) rowJ[i] = overlapPercent;
 
+        const fundI = mutualFunds[i];
+        const fundJ = mutualFunds[j];
         pairwiseOverlap.push({
-          fund1: { symbol: fundSymbols[i], name: mutualFunds[i].name },
-          fund2: { symbol: fundSymbols[j], name: mutualFunds[j].name },
+          fund1: { symbol: symI, name: fundI?.name ?? symI },
+          fund2: { symbol: symJ, name: fundJ?.name ?? symJ },
           overlapPercent,
           commonStocksCount: commonStocks.length,
           commonStocks: commonStocks.sort((a, b) => b.weightInFund1 - a.weightInFund1),

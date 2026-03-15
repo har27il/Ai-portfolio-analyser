@@ -44,7 +44,7 @@ export const authController = {
     // Hash password with bcrypt (Argon2 preferred in production)
     const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
 
-    const [user] = await db.insert(users).values({
+    const rows = await db.insert(users).values({
       email,
       passwordHash,
       name,
@@ -55,6 +55,12 @@ export const authController = {
       name: users.name,
       createdAt: users.createdAt,
     });
+
+    const user = rows[0];
+    if (!user) {
+      reply.code(500);
+      return { error: 'Failed to create user' };
+    }
 
     // Generate tokens
     const accessToken = (request.server as any).jwt.sign(
