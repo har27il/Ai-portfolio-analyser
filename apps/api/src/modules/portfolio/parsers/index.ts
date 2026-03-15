@@ -138,15 +138,29 @@ function parseCSV(content: string, broker?: string): ParseResult {
 }
 
 function parseExcel(buffer: Buffer, broker?: string): ParseResult {
-  const workbook = XLSX.read(buffer, { type: 'buffer' });
+  // Safe XLSX options: disable formula execution, macros, and external references
+  const workbook = XLSX.read(buffer, {
+    type: 'buffer',
+    cellFormula: false,
+    cellNF: false,
+    cellHTML: false,
+    cellStyles: false,
+    bookVBA: false,       // Ignore VBA macros
+    password: undefined,  // Don't attempt password decryption
+  });
   const sheetName = workbook.SheetNames[0];
+  if (!sheetName) {
+    return { success: false, holdings: [], errors: [{ row: 0, column: '', value: '', message: 'Excel file has no sheets' }], warnings: [] };
+  }
   const sheet = workbook.Sheets[sheetName];
   const csvContent = XLSX.utils.sheet_to_csv(sheet);
   return parseCSV(csvContent, broker);
 }
 
 export async function parsePortfolioFile(buffer: Buffer, filename: string, broker?: string): Promise<ParseResult> {
-  const ext = filename.toLowerCase().split('.').pop();
+  // Sanitize filename — extract only the extension
+  const sanitizedName = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const ext = sanitizedName.toLowerCase().split('.').pop();
 
   if (ext === 'csv') {
     const content = buffer.toString('utf-8');

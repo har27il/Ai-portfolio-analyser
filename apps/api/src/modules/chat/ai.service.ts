@@ -1,8 +1,8 @@
 import Anthropic from '@anthropic-ai/sdk';
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY || '',
-});
+// Only initialize if API key is available
+const apiKey = process.env.ANTHROPIC_API_KEY;
+const anthropic = apiKey ? new Anthropic({ apiKey }) : null;
 
 const SYSTEM_PROMPT = `You are an expert portfolio analyst assistant helping a retail investor understand and optimize their investment portfolio. You have access to their complete portfolio data and analysis.
 
@@ -41,8 +41,8 @@ export async function getAIResponse(
   portfolioContext: string,
   conversationHistory: MessageHistory[]
 ): Promise<AIResponse> {
-  // If no API key, return a helpful fallback
-  if (!process.env.ANTHROPIC_API_KEY) {
+  // If no API key configured, return a helpful fallback
+  if (!anthropic) {
     return {
       message: generateFallbackResponse(userQuery, portfolioContext),
       citations: [],
@@ -85,8 +85,10 @@ export async function getAIResponse(
       citations: [],
       suggestedFollowUps: followUps,
     };
-  } catch (error: any) {
-    console.error('AI service error:', error);
+  } catch (error: unknown) {
+    // Never log full error objects — may contain API keys or sensitive data
+    const errMsg = error instanceof Error ? error.message : 'Unknown AI service error';
+    console.error('AI service error:', errMsg);
     return {
       message: generateFallbackResponse(userQuery, portfolioContext),
       citations: [],
