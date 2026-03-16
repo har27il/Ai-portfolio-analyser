@@ -99,11 +99,11 @@ export default function HomePage() {
             {/* Total Value Card — Blue, tilted left */}
             <Link
               href="/dashboard"
-              className="bg-card-blue rounded-2xl p-6 lg:p-6 text-white border-[3px] border-black/25 shadow-[5px_6px_0px_rgba(0,0,0,0.25)] rotate-[-3deg] lg:rotate-[-2deg] hover:rotate-0 hover:shadow-[7px_8px_0px_rgba(0,0,0,0.3)] hover:-translate-y-2 transition-all duration-300 ease-out"
+              className="bg-card-blue rounded-2xl p-6 lg:p-6 text-white border-[3px] border-black/40 shadow-[6px_6px_0px_rgba(0,0,0,0.45)] rotate-[-3deg] lg:rotate-[-2deg] hover:rotate-0 hover:shadow-[8px_8px_0px_rgba(0,0,0,0.5)] hover:-translate-y-2 transition-all duration-300 ease-out"
             >
-              {/* Pie chart icon */}
-              <div className="w-10 h-10 lg:w-12 lg:h-12 mb-3 lg:mb-4 relative">
-                <svg className="w-10 h-10 lg:w-12 lg:h-12" viewBox="0 0 40 40">
+              {/* Pie chart icon — neo-brutalist mini-tile */}
+              <div className="w-10 h-10 lg:w-12 lg:h-12 mb-3 lg:mb-4 relative bg-blue-800 rounded-lg border-2 border-black/30 shadow-[3px_3px_0px_rgba(0,0,0,0.3)] flex items-center justify-center">
+                <svg className="w-7 h-7 lg:w-8 lg:h-8" viewBox="0 0 40 40">
                   <circle cx="20" cy="20" r="16" fill="none" stroke="white" strokeWidth="3" opacity="0.3" />
                   <path d="M20 4 A16 16 0 0 1 36 20 L20 20 Z" fill="#F97316" />
                   <path d="M36 20 A16 16 0 0 1 20 36 L20 20 Z" fill="#EF4444" />
@@ -128,10 +128,10 @@ export default function HomePage() {
             {/* Top Performer Card — Orange, tilted right */}
             <Link
               href="/dashboard"
-              className="bg-card-orange rounded-2xl p-6 lg:p-6 text-white border-[3px] border-black/25 shadow-[5px_6px_0px_rgba(0,0,0,0.25)] rotate-[2deg] lg:rotate-[1.5deg] hover:rotate-0 hover:shadow-[7px_8px_0px_rgba(0,0,0,0.3)] hover:-translate-y-2 transition-all duration-300 ease-out"
+              className="bg-card-orange rounded-2xl p-6 lg:p-6 text-white border-[3px] border-black/40 shadow-[6px_6px_0px_rgba(0,0,0,0.45)] rotate-[2deg] lg:rotate-[1.5deg] hover:rotate-0 hover:shadow-[8px_8px_0px_rgba(0,0,0,0.5)] hover:-translate-y-2 transition-all duration-300 ease-out"
             >
-              {/* Graph icon — dark square with white arrow */}
-              <div className="w-10 h-10 lg:w-12 lg:h-12 bg-amber-900 rounded-xl flex items-center justify-center mb-3 lg:mb-4">
+              {/* Graph icon — neo-brutalist mini-tile */}
+              <div className="w-10 h-10 lg:w-12 lg:h-12 bg-amber-900 rounded-lg border-2 border-black/30 shadow-[3px_3px_0px_rgba(0,0,0,0.3)] flex items-center justify-center mb-3 lg:mb-4">
                 <svg className="w-5 h-5 lg:w-6 lg:h-6 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M2 20l5.5-5.5m0 0l3 3L16 12m0 0l4-4m-4 4v4m0-4h4" />
                 </svg>
@@ -150,9 +150,9 @@ export default function HomePage() {
             {/* Risk Score Card — Desktop only, slight tilt */}
             <Link
               href="/dashboard/health"
-              className="hidden lg:flex bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl p-6 text-white flex-col border-[3px] border-black/25 shadow-[5px_6px_0px_rgba(0,0,0,0.25)] rotate-[1deg] hover:rotate-0 hover:shadow-[7px_8px_0px_rgba(0,0,0,0.3)] hover:-translate-y-2 transition-all duration-300 ease-out"
+              className="hidden lg:flex bg-emerald-600 rounded-2xl p-6 text-white flex-col border-[3px] border-black/40 shadow-[6px_6px_0px_rgba(0,0,0,0.45)] rotate-[1deg] hover:rotate-0 hover:shadow-[8px_8px_0px_rgba(0,0,0,0.5)] hover:-translate-y-2 transition-all duration-300 ease-out"
             >
-              <div className="w-12 h-12 bg-white/15 rounded-lg flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-emerald-800 rounded-lg border-2 border-black/30 shadow-[3px_3px_0px_rgba(0,0,0,0.3)] flex items-center justify-center mb-4">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
                 </svg>
@@ -167,8 +167,8 @@ export default function HomePage() {
 
           {/* ── Peeking cards below fold (mobile) ── */}
           <div className="grid grid-cols-2 gap-4 mt-4 lg:hidden" aria-hidden="true">
-            <div className="bg-emerald-600 rounded-2xl p-5 h-20 border-[3px] border-black/25 shadow-[5px_6px_0px_rgba(0,0,0,0.25)] rotate-[1deg] opacity-80" />
-            <div className="bg-card-blue/80 rounded-2xl p-5 h-20 border-[3px] border-black/25 shadow-[5px_6px_0px_rgba(0,0,0,0.25)] rotate-[-1.5deg] opacity-80" />
+            <div className="bg-emerald-600 rounded-2xl p-5 h-20 border-[3px] border-black/40 shadow-[6px_6px_0px_rgba(0,0,0,0.45)] rotate-[1deg] opacity-80" />
+            <div className="bg-card-blue/80 rounded-2xl p-5 h-20 border-[3px] border-black/40 shadow-[6px_6px_0px_rgba(0,0,0,0.45)] rotate-[-1.5deg] opacity-80" />
           </div>
 
           {/* ── Desktop: Recent Activity table ── */}
