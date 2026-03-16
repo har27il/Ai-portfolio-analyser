@@ -74,7 +74,7 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between mb-1">
             <h1 className="text-xl font-bold lg:text-2xl">Dashboard</h1>
             <div className="flex items-center gap-2">
-              <Link href="/upload" className="p-2 rounded-xl bg-white shadow-card hover:shadow-card-lg transition">
+              <Link href="/upload" className="p-2 rounded-lg bg-white border-2 border-black/15 shadow-card hover:shadow-card-lg transition">
                 <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
                 </svg>
@@ -87,10 +87,10 @@ export default function DashboardPage() {
             {TABS.map((tab, i) => (
               <span
                 key={tab}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap cursor-pointer transition ${
+                className={`px-4 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap cursor-pointer transition-all ${
                   i === 0
-                    ? 'bg-card-dark text-white'
-                    : 'bg-white text-gray-500 shadow-card hover:shadow-card-lg'
+                    ? 'bg-card-dark text-white border-2 border-black/30 shadow-[3px_3px_0px_rgba(0,0,0,0.2)]'
+                    : 'bg-white text-gray-500 border-2 border-black/10 shadow-card hover:shadow-card-lg hover:-translate-y-0.5'
                 }`}
               >
                 {tab}
@@ -129,7 +129,7 @@ export default function DashboardPage() {
 
           {/* Quick Stats Row — 2-col mobile, 3-col desktop */}
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
-            <Link href="/dashboard/health" className="card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300">
+            <Link href="/dashboard/health" className="card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 cursor-pointer">
               <p className="stat-label">Health Score</p>
               <div className="flex items-center gap-2 mt-2">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white ${
@@ -173,7 +173,7 @@ export default function DashboardPage() {
               <Link href="/dashboard/sectors" className="text-xs text-accent font-medium hover:underline">View All</Link>
             </div>
             {/* Stacked bar */}
-            <div className="flex rounded-full h-3 overflow-hidden mb-3">
+            <div className="flex rounded-sm h-3 overflow-hidden mb-3">
               {sectors.map((s, i) => (
                 <div
                   key={s.name}
@@ -221,12 +221,12 @@ export default function DashboardPage() {
           <div className="space-y-2 lg:pb-8">
             <p className="section-title px-1">Insights</p>
             {sectors[0] && sectors[0].weight > 30 && (
-              <div className="card !p-3 flex items-start gap-3 border-l-4 border-amber-400">
+              <div className="card !p-3 flex items-start gap-3 border-l-4 border-amber-400 !border-t-2 !border-r-2 !border-b-2 border-t-black/10 border-r-black/10 border-b-black/10">
                 <span className="text-amber-500 text-sm">&#9888;</span>
                 <p className="text-xs text-gray-600">High concentration in {sectors[0].name} ({sectors[0].weight.toFixed(1)}%)</p>
               </div>
             )}
-            <div className="card !p-3 flex items-start gap-3 border-l-4 border-blue-400">
+            <div className="card !p-3 flex items-start gap-3 border-l-4 border-blue-400 !border-t-2 !border-r-2 !border-b-2 border-t-black/10 border-r-black/10 border-b-black/10">
               <span className="text-blue-500 text-sm">&#8505;</span>
               <p className="text-xs text-gray-600">No international exposure — consider global diversification</p>
             </div>
