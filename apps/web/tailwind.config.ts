@@ -11,6 +11,13 @@ const config: Config = {
         accent: '#4F46E5',
         'card-dark': '#1C1C2E',
         'card-darker': '#15152A',
+        // Screenshot-matched palette
+        'header-blue': '#1E3A8A',
+        'content-green': '#10B981',
+        'card-blue': '#2563EB',
+        'card-orange': '#F97316',
+        'text-dark': '#0F172A',
+        'status-bar': '#111827',
         primary: {
           50: '#EEF2FF',
           100: '#E0E7FF',
@@ -40,6 +47,7 @@ const config: Config = {
       boxShadow: {
         card: '0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02)',
         'card-lg': '0 4px 12px rgba(0,0,0,0.06)',
+        'card-hover': '0 8px 24px rgba(0,0,0,0.12)',
       },
     },
   },
