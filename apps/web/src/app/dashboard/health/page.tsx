@@ -41,7 +41,7 @@ export default function HealthScorePage() {
 
       <main className="px-5 space-y-4">
         {/* Score Ring */}
-        <div className="card-dark flex flex-col items-center py-8">
+        <div className="card-dark shadow-card-lg flex flex-col items-center py-8">
           <div className="relative w-28 h-28">
             <svg className="w-28 h-28 -rotate-90" viewBox="0 0 100 100">
               <circle cx="50" cy="50" r="45" fill="none" stroke="#2D2D44" strokeWidth="8" />
@@ -80,8 +80,8 @@ export default function HealthScorePage() {
                   </div>
                   <span className="text-xs font-bold text-gray-500">{c.score}/{c.max}</span>
                 </div>
-                <div className="w-full bg-gray-100 rounded-full h-1.5 mb-1.5">
-                  <div className={`h-1.5 rounded-full ${barColor} transition-all`} style={{ width: `${pct}%` }} />
+                <div className="w-full bg-gray-100 rounded-sm h-2 mb-1.5">
+                  <div className={`h-2 rounded-sm ${barColor} transition-all`} style={{ width: `${pct}%` }} />
                 </div>
                 <p className="text-[10px] text-gray-400">{c.description}</p>
               </div>
@@ -100,7 +100,7 @@ export default function HealthScorePage() {
             };
             const icons = { critical: '🔴', warning: '🟡', info: '🟢' };
             return (
-              <div key={i} className={`rounded-xl p-4 border-l-4 ${styles[alert.severity]}`}>
+              <div key={i} className={`rounded-lg p-4 border-l-4 border-2 border-black/10 ${styles[alert.severity]}`}>
                 <div className="flex items-start gap-2">
                   <span className="text-xs">{icons[alert.severity]}</span>
                   <div>

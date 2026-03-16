@@ -32,7 +32,7 @@ export default function SectorAnalysisPage() {
 
       <main className="px-5 space-y-4">
         {/* Donut Chart Card */}
-        <div className="card-dark flex items-center gap-5 py-6">
+        <div className="card-dark shadow-card-lg flex items-center gap-5 py-6">
           <div className="relative w-28 h-28 flex-shrink-0">
             <svg viewBox="0 0 100 100" className="w-28 h-28 -rotate-90">
               {(() => {
@@ -97,7 +97,7 @@ export default function SectorAnalysisPage() {
                 <div key={s.name}>
                   <div className="flex items-center justify-between mb-1.5">
                     <span className="text-xs font-medium text-gray-700">{s.name}</span>
-                    <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                    <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border border-black/10 ${
                       Math.abs(deviation) > 5
                         ? deviation > 0 ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'
                         : 'bg-emerald-100 text-emerald-700'
@@ -107,18 +107,18 @@ export default function SectorAnalysisPage() {
                   </div>
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <div className="flex-1 bg-gray-100 rounded-full h-2">
+                      <div className="flex-1 bg-gray-100 rounded-sm h-2.5">
                         <div
-                          className="h-2 rounded-full bg-accent transition-all"
+                          className="h-2.5 rounded-sm bg-accent transition-all"
                           style={{ width: `${(s.weight / maxWeight) * 100}%` }}
                         />
                       </div>
                       <span className="text-[10px] font-semibold w-10 text-right">{s.weight}%</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="flex-1 bg-gray-100 rounded-full h-2">
+                      <div className="flex-1 bg-gray-100 rounded-sm h-2.5">
                         <div
-                          className="h-2 rounded-full bg-gray-300 transition-all"
+                          className="h-2.5 rounded-sm bg-gray-300 transition-all"
                           style={{ width: `${(s.benchmark / maxWeight) * 100}%` }}
                         />
                       </div>

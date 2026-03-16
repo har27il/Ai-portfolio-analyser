@@ -41,13 +41,13 @@ const config: Config = {
         ],
       },
       borderRadius: {
-        '2xl': '1rem',
-        '3xl': '1.5rem',
+        '2xl': '0.75rem',
+        '3xl': '1rem',
       },
       boxShadow: {
-        card: '0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02)',
-        'card-lg': '0 4px 12px rgba(0,0,0,0.06)',
-        'card-hover': '0 8px 24px rgba(0,0,0,0.12)',
+        card: '4px 4px 0px rgba(0,0,0,0.15)',
+        'card-lg': '6px 6px 0px rgba(0,0,0,0.25)',
+        'card-hover': '8px 8px 0px rgba(0,0,0,0.3)',
       },
     },
   },

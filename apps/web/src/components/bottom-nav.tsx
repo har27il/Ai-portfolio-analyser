@@ -12,7 +12,7 @@ export function BottomNav({ active }: { active: string }) {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-2 z-50 lg:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-black/15 shadow-[0_-3px_0px_rgba(0,0,0,0.08)] px-2 z-50 lg:hidden">
       <div className="flex justify-around py-2 max-w-lg mx-auto">
         {items.map(item => (
           <Link
