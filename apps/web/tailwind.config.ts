@@ -33,7 +33,6 @@ const config: Config = {
       },
       fontFamily: {
         sans: [
-          'Inter',
           '-apple-system',
           'BlinkMacSystemFont',
           'system-ui',
@@ -41,13 +40,13 @@ const config: Config = {
         ],
       },
       borderRadius: {
-        '2xl': '0.75rem',
-        '3xl': '1rem',
+        '2xl': '0.25rem',
+        '3xl': '0.5rem',
       },
       boxShadow: {
-        card: '4px 4px 0px rgba(0,0,0,0.15)',
-        'card-lg': '6px 6px 0px rgba(0,0,0,0.25)',
-        'card-hover': '8px 8px 0px rgba(0,0,0,0.3)',
+        card: '4px 4px 0px rgba(0,0,0,0.4)',
+        'card-lg': '6px 6px 0px rgba(0,0,0,0.5)',
+        'card-hover': '8px 8px 0px rgba(0,0,0,0.55)',
       },
     },
   },

@@ -44,17 +44,17 @@ export default function HomePage() {
 
           {/* Navigation tabs — all 3 always show their distinct color */}
           <div className="flex gap-2">
-            <button className="w-10 h-10 rounded-lg flex items-center justify-center bg-card-blue">
+            <button className="w-10 h-10 flex items-center justify-center bg-card-blue border-2 border-black/30 shadow-[2px_2px_0px_rgba(0,0,0,0.3)]">
               <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
               </svg>
             </button>
-            <button className="w-10 h-10 rounded-lg flex items-center justify-center bg-content-green">
+            <button className="w-10 h-10 flex items-center justify-center bg-content-green border-2 border-black/30 shadow-[2px_2px_0px_rgba(0,0,0,0.3)]">
               <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
               </svg>
             </button>
-            <button className="w-10 h-10 rounded-lg flex items-center justify-center bg-yellow-900">
+            <button className="w-10 h-10 flex items-center justify-center bg-yellow-900 border-2 border-black/30 shadow-[2px_2px_0px_rgba(0,0,0,0.3)]">
               <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
               </svg>
@@ -173,14 +173,14 @@ export default function HomePage() {
 
           {/* ── Desktop: Recent Activity table ── */}
           <div className="hidden lg:block mt-8">
-            <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-card-lg overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-                <h3 className="text-sm font-bold text-text-dark">Recent Activity</h3>
-                <Link href="/dashboard" className="text-xs text-card-blue font-semibold hover:underline">View All</Link>
+            <div className="bg-white border-[3px] border-black/40 shadow-card-lg overflow-hidden">
+              <div className="px-6 py-4 border-b-[3px] border-black/20 flex items-center justify-between">
+                <h3 className="text-sm font-black uppercase tracking-wider text-text-dark">Recent Activity</h3>
+                <Link href="/dashboard" className="text-xs text-card-blue font-bold hover:underline uppercase tracking-wider">View All</Link>
               </div>
               <table className="w-full">
                 <thead>
-                  <tr className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
+                  <tr className="text-[10px] font-black text-gray-400 uppercase tracking-wider">
                     <th className="text-left px-6 py-3">Asset</th>
                     <th className="text-left px-6 py-3">Action</th>
                     <th className="text-right px-6 py-3">Amount</th>

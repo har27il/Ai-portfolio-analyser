@@ -59,13 +59,13 @@ export default function UploadPage() {
   return (
     <div className="min-h-screen bg-surface pb-20">
       {/* Header */}
-      <header className="px-5 pt-6 pb-4 flex items-center gap-3">
-        <Link href="/dashboard" className="p-2 -ml-2 rounded-xl hover:bg-white">
+      <header className="px-5 pt-6 pb-4 flex items-center gap-3 border-b-[3px] border-black/20">
+        <Link href="/dashboard" className="p-2 -ml-2 hover:bg-white border-2 border-transparent hover:border-black/20 transition-all">
           <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </Link>
-        <h1 className="text-xl font-bold">Upload Portfolio</h1>
+        <h1 className="text-xl font-black uppercase tracking-wider">Upload Portfolio</h1>
       </header>
 
       <main className="px-5 space-y-4">
@@ -77,14 +77,14 @@ export default function UploadPage() {
               <button
                 key={b.id}
                 onClick={() => setBroker(b.id)}
-                className={`card !p-3 !rounded-lg flex flex-col items-center gap-1.5 transition-all ${
+                className={`card !p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-all ${
                   broker === b.id
-                    ? '!bg-card-dark text-white !border-2 !border-black/30 shadow-card-lg'
+                    ? '!bg-card-dark text-white !border-[3px] !border-black/40 shadow-[4px_4px_0px_rgba(0,0,0,0.4)]'
                     : 'hover:shadow-card-lg hover:-translate-y-0.5'
                 }`}
               >
                 <span className="text-xl">{b.icon}</span>
-                <span className="text-[10px] font-semibold">{b.label}</span>
+                <span className="text-[9px] font-black uppercase tracking-wider">{b.label}</span>
               </button>
             ))}
           </div>
@@ -100,7 +100,7 @@ export default function UploadPage() {
         >
           {file ? (
             <div className="p-6 text-center">
-              <div className="w-14 h-14 bg-emerald-50 rounded-xl border-2 border-black/15 shadow-[3px_3px_0px_rgba(0,0,0,0.1)] flex items-center justify-center mx-auto mb-3">
+              <div className="w-14 h-14 bg-emerald-50 border-[3px] border-black/30 shadow-[3px_3px_0px_rgba(0,0,0,0.2)] flex items-center justify-center mx-auto mb-3">
                 <svg className="w-7 h-7 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -116,7 +116,7 @@ export default function UploadPage() {
             </div>
           ) : (
             <div className="p-8 text-center">
-              <div className="w-14 h-14 bg-gray-100 rounded-xl border-2 border-black/15 shadow-[3px_3px_0px_rgba(0,0,0,0.1)] flex items-center justify-center mx-auto mb-3">
+              <div className="w-14 h-14 bg-gray-100 border-[3px] border-black/30 shadow-[3px_3px_0px_rgba(0,0,0,0.2)] flex items-center justify-center mx-auto mb-3">
                 <svg className="w-7 h-7 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                 </svg>

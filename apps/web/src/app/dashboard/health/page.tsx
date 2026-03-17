@@ -30,13 +30,13 @@ export default function HealthScorePage() {
   return (
     <div className="min-h-screen bg-surface pb-20">
       {/* Header */}
-      <header className="px-5 pt-6 pb-4 flex items-center gap-3">
-        <Link href="/dashboard" className="p-2 -ml-2 rounded-xl hover:bg-white">
+      <header className="px-5 pt-6 pb-4 flex items-center gap-3 border-b-[3px] border-black/20">
+        <Link href="/dashboard" className="p-2 -ml-2 hover:bg-white border-2 border-transparent hover:border-black/20 transition-all">
           <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </Link>
-        <h1 className="text-xl font-bold">Health Score</h1>
+        <h1 className="text-xl font-black uppercase tracking-wider">Health Score</h1>
       </header>
 
       <main className="px-5 space-y-4">
@@ -80,8 +80,8 @@ export default function HealthScorePage() {
                   </div>
                   <span className="text-xs font-bold text-gray-500">{c.score}/{c.max}</span>
                 </div>
-                <div className="w-full bg-gray-100 rounded-sm h-2 mb-1.5">
-                  <div className={`h-2 rounded-sm ${barColor} transition-all`} style={{ width: `${pct}%` }} />
+                <div className="w-full bg-gray-100 h-3 mb-1.5 border-2 border-black/30">
+                  <div className={`h-full ${barColor} transition-all`} style={{ width: `${pct}%` }} />
                 </div>
                 <p className="text-[10px] text-gray-400">{c.description}</p>
               </div>
@@ -100,7 +100,7 @@ export default function HealthScorePage() {
             };
             const icons = { critical: '🔴', warning: '🟡', info: '🟢' };
             return (
-              <div key={i} className={`rounded-lg p-4 border-l-4 border-2 border-black/10 ${styles[alert.severity]}`}>
+              <div key={i} className={`p-4 border-l-4 border-[3px] border-black/20 ${styles[alert.severity]}`}>
                 <div className="flex items-start gap-2">
                   <span className="text-xs">{icons[alert.severity]}</span>
                   <div>
