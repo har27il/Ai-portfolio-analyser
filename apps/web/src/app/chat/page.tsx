@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { BottomNav } from '@/components/bottom-nav';
+import { DesktopSidebar } from '@/components/desktop-sidebar';
 
 interface ChatMessage {
   id: string;
@@ -52,16 +53,20 @@ export default function ChatPage() {
     try {
       let response: any;
       try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/v1/conversations/demo/messages`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ content: content.trim() }),
+          signal: controller.signal,
         });
+        clearTimeout(timeoutId);
         if (res.ok) {
           response = await res.json();
         }
       } catch {
-        // API not available
+        // API not available — fall through to demo response
       }
 
       const aiMessage: ChatMessage = {
@@ -81,121 +86,125 @@ export default function ChatPage() {
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (
-    <div className="min-h-screen bg-surface flex flex-col pb-20">
-      {/* Header */}
-      <header className="px-5 pt-6 pb-4 flex items-center gap-3 border-b-[3px] border-black/20">
-        <Link href="/dashboard" className="p-2 -ml-2 hover:bg-white border-2 border-transparent hover:border-black/20 transition-all">
-          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </Link>
-        <div>
-          <h1 className="text-xl font-black uppercase tracking-wider">AI Chat</h1>
-          <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Ask about your portfolio</p>
-        </div>
-      </header>
+    <div className="min-h-screen flex">
+      <DesktopSidebar active="chat" />
 
-      {/* Chat Area */}
-      <main className="flex-1 px-5 flex flex-col min-h-0">
-        {messages.length === 0 ? (
-          <div className="flex-1 flex items-center justify-center">
-            <div className="text-center w-full">
-              <div className="w-16 h-16 bg-card-dark border-[3px] border-black/40 shadow-[4px_4px_0px_rgba(0,0,0,0.4)] flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
-              </div>
-              <h2 className="text-lg font-black uppercase tracking-wider mb-1">Portfolio Assistant</h2>
-              <p className="text-xs text-gray-400 mb-6">Get AI-powered insights about your investments</p>
-              <div className="grid grid-cols-2 gap-2">
-                {SUGGESTED_QUESTIONS.map(q => (
-                  <button
-                    key={q}
-                    onClick={() => sendMessage(q)}
-                    className="card !p-3 text-left text-xs font-black text-gray-600 hover:shadow-card-lg hover:-translate-y-0.5 active:scale-[0.97] transition-all"
-                  >
-                    {q}
-                  </button>
-                ))}
+      <div className="flex-1 min-h-screen bg-surface flex flex-col lg:ml-[280px]">
+        {/* Header */}
+        <header className="px-5 pt-6 pb-4 flex items-center gap-3 border-b-[3px] border-black/20">
+          <Link href="/dashboard" className="p-2 -ml-2 hover:bg-white border-2 border-transparent hover:border-black/20 transition-all">
+            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </Link>
+          <div>
+            <h1 className="text-xl font-black uppercase tracking-wider">AI Chat</h1>
+            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Ask about your portfolio</p>
+          </div>
+        </header>
+
+        {/* Chat Area */}
+        <main className="flex-1 px-5 flex flex-col min-h-0 pb-20 lg:pb-0">
+          {messages.length === 0 ? (
+            <div className="flex-1 flex items-center justify-center">
+              <div className="text-center w-full max-w-lg mx-auto">
+                <div className="w-16 h-16 bg-card-dark border-[3px] border-black/40 shadow-[4px_4px_0px_rgba(0,0,0,0.4)] flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                </div>
+                <h2 className="text-lg font-black uppercase tracking-wider mb-1">Portfolio Assistant</h2>
+                <p className="text-xs text-gray-400 mb-6">Get AI-powered insights about your investments</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {SUGGESTED_QUESTIONS.map(q => (
+                    <button
+                      key={q}
+                      onClick={() => sendMessage(q)}
+                      className="card !p-3 text-left text-xs font-black text-gray-600 hover:shadow-card-lg hover:-translate-y-0.5 active:scale-[0.97] transition-all cursor-pointer"
+                    >
+                      {q}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div className="flex-1 overflow-y-auto space-y-3 py-2">
-            {messages.map(msg => (
-              <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] px-4 py-3 ${
-                  msg.role === 'user'
-                    ? 'bg-card-dark text-white border-[3px] border-black/40 shadow-[4px_4px_0px_rgba(0,0,0,0.3)]'
-                    : 'bg-white border-[3px] border-black/30 shadow-[4px_4px_0px_rgba(0,0,0,0.15)]'
-                }`}>
-                  <p className="text-xs leading-relaxed whitespace-pre-wrap">{msg.content}</p>
-                  {msg.suggestedFollowUps && msg.suggestedFollowUps.length > 0 && (
-                    <div className="mt-3 flex flex-wrap gap-1.5">
-                      {msg.suggestedFollowUps.map(q => (
-                        <button
-                          key={q}
-                          onClick={() => sendMessage(q)}
-                          className="text-[10px] font-black uppercase tracking-wider bg-gray-100 text-gray-600 px-2.5 py-1 border-2 border-black/20 hover:bg-gray-200 active:scale-[0.97] transition-all"
-                        >
-                          {q}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="card !p-3">
-                  <div className="flex gap-1.5">
-                    <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+          ) : (
+            <div className="flex-1 overflow-y-auto space-y-3 py-2">
+              {messages.map(msg => (
+                <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[85%] lg:max-w-[65%] px-4 py-3 ${
+                    msg.role === 'user'
+                      ? 'bg-card-dark text-white border-[3px] border-black/40 shadow-[4px_4px_0px_rgba(0,0,0,0.3)]'
+                      : 'bg-white border-[3px] border-black/30 shadow-[4px_4px_0px_rgba(0,0,0,0.15)]'
+                  }`}>
+                    <p className="text-xs leading-relaxed whitespace-pre-wrap">{msg.content}</p>
+                    {msg.suggestedFollowUps && msg.suggestedFollowUps.length > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {msg.suggestedFollowUps.map(q => (
+                          <button
+                            key={q}
+                            onClick={() => sendMessage(q)}
+                            className="text-[10px] font-black uppercase tracking-wider bg-gray-100 text-gray-600 px-2.5 py-1 border-2 border-black/20 hover:bg-gray-200 active:scale-[0.97] transition-all cursor-pointer"
+                          >
+                            {q}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-        )}
+              ))}
+              {isLoading && (
+                <div className="flex justify-start">
+                  <div className="card !p-3">
+                    <div className="flex gap-1.5">
+                      <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+          )}
 
-        {/* Input */}
-        <div className="py-3">
-          <div className="card !p-2 flex items-center gap-2">
-            <input
-              type="text"
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && sendMessage(input)}
-              placeholder="Ask about your portfolio..."
-              className="flex-1 text-xs outline-none px-2 py-1 bg-transparent"
-              disabled={isLoading}
-            />
-            <button
-              onClick={() => sendMessage(input)}
-              disabled={!input.trim() || isLoading}
-              className="bg-card-dark text-white p-2 border-[3px] border-black/40 shadow-[3px_3px_0px_rgba(0,0,0,0.3)] disabled:opacity-30 active:scale-[0.95] transition-all"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-              </svg>
-            </button>
+          {/* Input — sticky at bottom */}
+          <div className="sticky bottom-20 lg:bottom-0 py-3 bg-surface">
+            <div className="card !p-2 flex items-center gap-2 max-w-lg mx-auto lg:max-w-2xl">
+              <input
+                type="text"
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && sendMessage(input)}
+                placeholder="Ask about your portfolio..."
+                className="flex-1 text-xs outline-none px-2 py-1.5 bg-transparent"
+                disabled={isLoading}
+              />
+              <button
+                onClick={() => sendMessage(input)}
+                disabled={!input.trim() || isLoading}
+                className="bg-card-dark text-white p-2 border-[3px] border-black/40 shadow-[3px_3px_0px_rgba(0,0,0,0.3)] disabled:opacity-30 active:scale-[0.95] transition-all cursor-pointer"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+              </button>
+            </div>
+            <p className="text-[8px] text-gray-400 text-center mt-1.5">
+              Not financial advice. For educational purposes only.
+            </p>
           </div>
-          <p className="text-[8px] text-gray-400 text-center mt-1.5">
-            Not financial advice. For educational purposes only.
-          </p>
-        </div>
-      </main>
+        </main>
 
-      <BottomNav active="chat" />
+        <BottomNav active="chat" />
+      </div>
     </div>
   );
 }
