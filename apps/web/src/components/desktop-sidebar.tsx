@@ -13,17 +13,17 @@ const NAV_ITEMS = [
 
 export function DesktopSidebar({ active }: { active: string }) {
   return (
-    <aside className="hidden lg:flex flex-col fixed top-0 left-0 bottom-0 w-[280px] bg-status-bar text-white z-50 border-r-2 border-white/10">
+    <aside className="hidden lg:flex flex-col fixed top-0 left-0 bottom-0 w-[280px] bg-status-bar text-white z-50 border-r-[3px] border-black/40">
       {/* Logo section */}
-      <div className="px-6 pt-6 pb-4 border-b border-white/10">
+      <div className="px-6 pt-6 pb-4 border-b-[3px] border-black/30">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-card-blue rounded-lg flex items-center justify-center border-2 border-black/30 shadow-[3px_3px_0px_rgba(0,0,0,0.3)]">
+          <div className="w-9 h-9 bg-card-blue flex items-center justify-center border-[3px] border-black/40 shadow-[3px_3px_0px_rgba(0,0,0,0.4)]">
             <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 17l4-4 4 4 6-8 4 4" />
             </svg>
           </div>
           <div>
-            <p className="text-sm font-bold tracking-tight">Portfolio</p>
+            <p className="text-sm font-black uppercase tracking-wider">Portfolio</p>
             <p className="text-[10px] text-gray-400 font-medium">Analyser Pro</p>
           </div>
         </div>
@@ -45,7 +45,7 @@ export function DesktopSidebar({ active }: { active: string }) {
 
       {/* Mini portfolio selector */}
       <div className="px-4 pb-6">
-        <div className="bg-white/5 rounded-lg border border-white/10 p-3">
+        <div className="bg-white/5 border-[3px] border-white/15 shadow-[3px_3px_0px_rgba(255,255,255,0.05)] p-3">
           <p className="text-[10px] text-gray-500 font-medium uppercase tracking-wider mb-2">Active Portfolio</p>
           <p className="text-sm font-semibold">My Portfolio</p>
           <p className="text-[10px] text-gray-400 mt-0.5">10 holdings</p>

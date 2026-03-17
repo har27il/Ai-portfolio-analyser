@@ -21,13 +21,13 @@ export default function SectorAnalysisPage() {
   return (
     <div className="min-h-screen bg-surface pb-20">
       {/* Header */}
-      <header className="px-5 pt-6 pb-4 flex items-center gap-3">
-        <Link href="/dashboard" className="p-2 -ml-2 rounded-xl hover:bg-white">
+      <header className="px-5 pt-6 pb-4 flex items-center gap-3 border-b-[3px] border-black/20">
+        <Link href="/dashboard" className="p-2 -ml-2 hover:bg-white border-2 border-transparent hover:border-black/20 transition-all">
           <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </Link>
-        <h1 className="text-xl font-bold">Sector Analysis</h1>
+        <h1 className="text-xl font-black uppercase tracking-wider">Sector Analysis</h1>
       </header>
 
       <main className="px-5 space-y-4">
@@ -97,7 +97,7 @@ export default function SectorAnalysisPage() {
                 <div key={s.name}>
                   <div className="flex items-center justify-between mb-1.5">
                     <span className="text-xs font-medium text-gray-700">{s.name}</span>
-                    <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border border-black/10 ${
+                    <span className={`text-[10px] font-black px-1.5 py-0.5 border-2 border-black/20 ${
                       Math.abs(deviation) > 5
                         ? deviation > 0 ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'
                         : 'bg-emerald-100 text-emerald-700'
@@ -107,18 +107,18 @@ export default function SectorAnalysisPage() {
                   </div>
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <div className="flex-1 bg-gray-100 rounded-sm h-2.5">
+                      <div className="flex-1 bg-gray-100 h-3 border-2 border-black/30">
                         <div
-                          className="h-2.5 rounded-sm bg-accent transition-all"
+                          className="h-full bg-accent transition-all"
                           style={{ width: `${(s.weight / maxWeight) * 100}%` }}
                         />
                       </div>
                       <span className="text-[10px] font-semibold w-10 text-right">{s.weight}%</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="flex-1 bg-gray-100 rounded-sm h-2.5">
+                      <div className="flex-1 bg-gray-100 h-3 border-2 border-black/30">
                         <div
-                          className="h-2.5 rounded-sm bg-gray-300 transition-all"
+                          className="h-full bg-gray-300 transition-all"
                           style={{ width: `${(s.benchmark / maxWeight) * 100}%` }}
                         />
                       </div>

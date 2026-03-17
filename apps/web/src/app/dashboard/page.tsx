@@ -70,11 +70,11 @@ export default function DashboardPage() {
 
       <div className="flex-1 min-h-screen bg-surface pb-20 lg:pb-0 lg:ml-[280px]">
         {/* Header */}
-        <header className="px-5 pt-6 pb-4 lg:px-8 lg:pt-8">
+        <header className="px-5 pt-6 pb-4 lg:px-8 lg:pt-8 border-b-[3px] border-black/20">
           <div className="flex items-center justify-between mb-1">
-            <h1 className="text-xl font-bold lg:text-2xl">Dashboard</h1>
+            <h1 className="text-xl font-black uppercase tracking-wider lg:text-2xl">Dashboard</h1>
             <div className="flex items-center gap-2">
-              <Link href="/upload" className="p-2 rounded-lg bg-white border-2 border-black/15 shadow-card hover:shadow-card-lg transition">
+              <Link href="/upload" className="p-2 bg-white border-[3px] border-black/40 shadow-card hover:shadow-card-lg active:scale-[0.97] transition-all">
                 <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
                 </svg>
@@ -83,14 +83,14 @@ export default function DashboardPage() {
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-2 mt-3 overflow-x-auto">
+          <div className="flex mt-3 overflow-x-auto border-[3px] border-black/30">
             {TABS.map((tab, i) => (
               <span
                 key={tab}
-                className={`px-4 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap cursor-pointer transition-all ${
+                className={`px-4 py-2 text-xs font-black uppercase tracking-wider whitespace-nowrap cursor-pointer transition-all border-r-[2px] border-black/20 last:border-r-0 ${
                   i === 0
-                    ? 'bg-card-dark text-white border-2 border-black/30 shadow-[3px_3px_0px_rgba(0,0,0,0.2)]'
-                    : 'bg-white text-gray-500 border-2 border-black/10 shadow-card hover:shadow-card-lg hover:-translate-y-0.5'
+                    ? 'bg-card-dark text-white shadow-[3px_3px_0px_rgba(0,0,0,0.3)]'
+                    : 'bg-white text-gray-500 hover:bg-gray-50'
                 }`}
               >
                 {tab}
@@ -129,38 +129,36 @@ export default function DashboardPage() {
 
           {/* Quick Stats Row — 2-col mobile, 3-col desktop */}
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
-            <Link href="/dashboard/health" className="card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-              <p className="stat-label">Health Score</p>
+            <Link href="/dashboard/health" className="bg-emerald-600 p-5 text-white border-[3px] border-black/40 shadow-card hover:shadow-card-hover hover:-translate-y-1 active:scale-[0.97] transition-all duration-300 cursor-pointer">
+              <p className="text-[9px] font-black text-white/70 uppercase tracking-[0.15em]">Health Score</p>
               <div className="flex items-center gap-2 mt-2">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white ${
-                  healthScore >= 75 ? 'bg-emerald-500' : healthScore >= 50 ? 'bg-amber-500' : 'bg-red-500'
-                }`}>
+                <div className="w-10 h-10 bg-black border-[3px] border-black/40 flex items-center justify-center text-sm font-black text-white shadow-[2px_2px_0px_rgba(0,0,0,0.3)]">
                   {healthScore}
                 </div>
                 <div>
-                  <p className="text-sm font-bold">{healthScore >= 75 ? 'Good' : healthScore >= 50 ? 'Fair' : 'Poor'}</p>
-                  <p className="text-[10px] text-gray-400">out of 100</p>
+                  <p className="text-sm font-black text-white">{healthScore >= 75 ? 'Good' : healthScore >= 50 ? 'Fair' : 'Poor'}</p>
+                  <p className="text-[10px] text-white/60 font-bold">out of 100</p>
                 </div>
               </div>
             </Link>
 
-            <div className="card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300">
-              <p className="stat-label">Unrealized P&L</p>
-              <p className={`text-lg font-bold mt-2 ${portfolio.unrealizedPnL >= 0 ? 'text-emerald-500' : 'text-red-500'}`}>
+            <div className="bg-card-blue p-5 text-white border-[3px] border-black/40 shadow-card hover:shadow-card-hover hover:-translate-y-1 active:scale-[0.97] transition-all duration-300">
+              <p className="text-[9px] font-black text-white/70 uppercase tracking-[0.15em]">Unrealized P&L</p>
+              <p className="text-lg font-black mt-2 text-white">
                 {formatCurrency(portfolio.unrealizedPnL)}
               </p>
-              <p className={`text-xs font-medium ${portfolio.unrealizedPnL >= 0 ? 'text-emerald-500' : 'text-red-500'}`}>
+              <p className="text-xs font-bold text-white/80">
                 {formatPercent(portfolio.unrealizedPnLPercent)}
               </p>
             </div>
 
             {/* Desktop 3rd card: Top Performer */}
-            <div className="hidden lg:block card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300">
-              <p className="stat-label">Top Performer</p>
-              <p className="text-lg font-bold mt-2 text-emerald-500">
+            <div className="hidden lg:flex flex-col bg-card-orange p-5 text-white border-[3px] border-black/40 shadow-card hover:shadow-card-hover hover:-translate-y-1 active:scale-[0.97] transition-all duration-300">
+              <p className="text-[9px] font-black text-white/70 uppercase tracking-[0.15em]">Top Performer</p>
+              <p className="text-lg font-black mt-2 text-white">
                 {sortedHoldings[0]?.symbol}
               </p>
-              <p className="text-xs font-medium text-emerald-500">
+              <p className="text-xs font-bold text-white/80">
                 {formatPercent(sortedHoldings[0]?.pnlPercent ?? 0)}
               </p>
             </div>
@@ -173,7 +171,7 @@ export default function DashboardPage() {
               <Link href="/dashboard/sectors" className="text-xs text-accent font-medium hover:underline">View All</Link>
             </div>
             {/* Stacked bar */}
-            <div className="flex rounded-sm h-3 overflow-hidden mb-3">
+            <div className="flex h-3 overflow-hidden mb-3 border-2 border-black/30">
               {sectors.map((s, i) => (
                 <div
                   key={s.name}
@@ -199,7 +197,7 @@ export default function DashboardPage() {
               <p className="text-sm font-semibold">Holdings ({holdings.length})</p>
               <Link href="/upload" className="text-xs text-accent font-medium hover:underline">+ Add</Link>
             </div>
-            <div className="divide-y divide-gray-50">
+            <div className="divide-y divide-gray-200">
               {sortedHoldings.map(h => (
                 <div key={h.symbol} className="px-5 py-3 flex items-center justify-between hover:bg-gray-50/50 transition">
                   <div className="min-w-0">
@@ -221,12 +219,12 @@ export default function DashboardPage() {
           <div className="space-y-2 lg:pb-8">
             <p className="section-title px-1">Insights</p>
             {sectors[0] && sectors[0].weight > 30 && (
-              <div className="card !p-3 flex items-start gap-3 border-l-4 border-amber-400 !border-t-2 !border-r-2 !border-b-2 border-t-black/10 border-r-black/10 border-b-black/10">
+              <div className="card !p-3 flex items-start gap-3 border-l-4 border-amber-400 !border-[3px] !border-l-4 border-t-black/30 border-r-black/30 border-b-black/30">
                 <span className="text-amber-500 text-sm">&#9888;</span>
                 <p className="text-xs text-gray-600">High concentration in {sectors[0].name} ({sectors[0].weight.toFixed(1)}%)</p>
               </div>
             )}
-            <div className="card !p-3 flex items-start gap-3 border-l-4 border-blue-400 !border-t-2 !border-r-2 !border-b-2 border-t-black/10 border-r-black/10 border-b-black/10">
+            <div className="card !p-3 flex items-start gap-3 border-l-4 border-blue-400 !border-[3px] !border-l-4 border-t-black/30 border-r-black/30 border-b-black/30">
               <span className="text-blue-500 text-sm">&#8505;</span>
               <p className="text-xs text-gray-600">No international exposure — consider global diversification</p>
             </div>

@@ -89,15 +89,15 @@ export default function ChatPage() {
   return (
     <div className="min-h-screen bg-surface flex flex-col pb-20">
       {/* Header */}
-      <header className="px-5 pt-6 pb-4 flex items-center gap-3">
-        <Link href="/dashboard" className="p-2 -ml-2 rounded-xl hover:bg-white">
+      <header className="px-5 pt-6 pb-4 flex items-center gap-3 border-b-[3px] border-black/20">
+        <Link href="/dashboard" className="p-2 -ml-2 hover:bg-white border-2 border-transparent hover:border-black/20 transition-all">
           <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </Link>
         <div>
-          <h1 className="text-xl font-bold">AI Chat</h1>
-          <p className="text-[10px] text-gray-400">Ask about your portfolio</p>
+          <h1 className="text-xl font-black uppercase tracking-wider">AI Chat</h1>
+          <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Ask about your portfolio</p>
         </div>
       </header>
 
@@ -106,19 +106,19 @@ export default function ChatPage() {
         {messages.length === 0 ? (
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center w-full">
-              <div className="w-16 h-16 bg-card-dark rounded-xl border-2 border-black/30 shadow-[4px_4px_0px_rgba(0,0,0,0.3)] flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-card-dark border-[3px] border-black/40 shadow-[4px_4px_0px_rgba(0,0,0,0.4)] flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
               </div>
-              <h2 className="text-lg font-bold mb-1">Portfolio Assistant</h2>
+              <h2 className="text-lg font-black uppercase tracking-wider mb-1">Portfolio Assistant</h2>
               <p className="text-xs text-gray-400 mb-6">Get AI-powered insights about your investments</p>
               <div className="grid grid-cols-2 gap-2">
                 {SUGGESTED_QUESTIONS.map(q => (
                   <button
                     key={q}
                     onClick={() => sendMessage(q)}
-                    className="card !p-3 text-left text-xs font-bold text-gray-600 hover:shadow-card-lg hover:-translate-y-0.5 transition-all"
+                    className="card !p-3 text-left text-xs font-black text-gray-600 hover:shadow-card-lg hover:-translate-y-0.5 active:scale-[0.97] transition-all"
                   >
                     {q}
                   </button>
@@ -130,10 +130,10 @@ export default function ChatPage() {
           <div className="flex-1 overflow-y-auto space-y-3 py-2">
             {messages.map(msg => (
               <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] rounded-xl px-4 py-3 ${
+                <div className={`max-w-[85%] px-4 py-3 ${
                   msg.role === 'user'
-                    ? 'bg-card-dark text-white border-2 border-black/30 shadow-[3px_3px_0px_rgba(0,0,0,0.2)]'
-                    : 'bg-white border-2 border-black/15 shadow-[3px_3px_0px_rgba(0,0,0,0.1)]'
+                    ? 'bg-card-dark text-white border-[3px] border-black/40 shadow-[4px_4px_0px_rgba(0,0,0,0.3)]'
+                    : 'bg-white border-[3px] border-black/30 shadow-[4px_4px_0px_rgba(0,0,0,0.15)]'
                 }`}>
                   <p className="text-xs leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                   {msg.suggestedFollowUps && msg.suggestedFollowUps.length > 0 && (
@@ -142,7 +142,7 @@ export default function ChatPage() {
                         <button
                           key={q}
                           onClick={() => sendMessage(q)}
-                          className="text-[10px] font-bold bg-gray-100 text-gray-600 px-2.5 py-1 rounded-lg border border-black/10 hover:bg-gray-200 transition"
+                          className="text-[10px] font-black uppercase tracking-wider bg-gray-100 text-gray-600 px-2.5 py-1 border-2 border-black/20 hover:bg-gray-200 active:scale-[0.97] transition-all"
                         >
                           {q}
                         </button>
@@ -182,7 +182,7 @@ export default function ChatPage() {
             <button
               onClick={() => sendMessage(input)}
               disabled={!input.trim() || isLoading}
-              className="bg-card-dark text-white p-2 rounded-lg border-2 border-black/25 shadow-[2px_2px_0px_rgba(0,0,0,0.2)] disabled:opacity-30 transition"
+              className="bg-card-dark text-white p-2 border-[3px] border-black/40 shadow-[3px_3px_0px_rgba(0,0,0,0.3)] disabled:opacity-30 active:scale-[0.95] transition-all"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
