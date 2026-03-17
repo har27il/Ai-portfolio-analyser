@@ -50,30 +50,41 @@ export default function ChatPage() {
     setInput('');
     setIsLoading(true);
 
+    // Small delay for natural typing feel
+    await new Promise(resolve => setTimeout(resolve, 500));
+
     try {
-      let response: any;
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 3000);
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/v1/conversations/demo/messages`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ content: content.trim() }),
-          signal: controller.signal,
-        });
-        clearTimeout(timeoutId);
-        if (res.ok) {
-          response = await res.json();
+      let aiContent: string | undefined;
+      let aiFollowUps: string[] | undefined;
+
+      // Only call real API if explicitly configured
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      if (apiUrl) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 5000);
+          const res = await fetch(`${apiUrl}/v1/conversations/demo/messages`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ content: content.trim() }),
+            signal: controller.signal,
+          });
+          clearTimeout(timeoutId);
+          if (res.ok) {
+            const response = await res.json();
+            aiContent = response?.assistantMessage?.content;
+            aiFollowUps = response?.assistantMessage?.metadata?.suggestedFollowUps;
+          }
+        } catch {
+          // API not available — use demo response
         }
-      } catch {
-        // API not available — fall through to demo response
       }
 
       const aiMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: response?.assistantMessage?.content || generateDemoResponse(content),
-        suggestedFollowUps: response?.assistantMessage?.metadata?.suggestedFollowUps || generateDemoFollowUps(content),
+        content: aiContent || generateDemoResponse(content),
+        suggestedFollowUps: aiFollowUps || generateDemoFollowUps(content),
         timestamp: new Date(),
       };
 
