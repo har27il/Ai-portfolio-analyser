@@ -1,29 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <!-- Background: transparent (no fill) -->
-
   <!-- Black rounded rectangle -->
-  <rect x="56" y="56" width="400" height="400" rx="64" ry="64" fill="#1A1A1A"/>
+  <rect x="48" y="48" width="416" height="416" rx="80" ry="80" fill="#1A1A1A"/>
 
-  <!-- White "P" letter -->
+  <!-- White P: stem + bowl -->
   <path d="
-    M 190 140
-    L 190 380
-    L 230 380
-    L 230 300
-    L 290 300
-    Q 350 300 350 230
-    Q 350 160 290 160
-    L 230 160
-    L 230 140
-    Z
-    M 230 195
-    L 280 195
-    Q 310 195 310 230
-    Q 310 265 280 265
-    L 230 265
-    Z
-  " fill="white"/>
+    M 175 130 L 220 130 L 220 385 L 175 385 Z
+    M 220 130 L 280 130 Q 350 130 350 210 Q 350 290 280 290 L 220 290
+    M 220 172 L 265 172 Q 315 172 315 210 Q 315 248 265 248 L 220 248
+  " fill="white" fill-rule="evenodd"/>
 
   <!-- Teal accent line -->
-  <path d="M 205 330 Q 256 360 330 310" stroke="#10B981" stroke-width="12" stroke-linecap="round" fill="none"/>
+  <path d="M 170 335 Q 280 345 345 300" stroke="#10B981" stroke-width="11" stroke-linecap="round" fill="none"/>
 </svg>
